@@ -7,13 +7,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateProfilePicture } from '../../Redux/actions/profile';
 import { loadUser } from '../../Redux/actions/user';
 import toast from 'react-hot-toast';
+import { removeFromPlaylist } from '../../Redux/actions/course';
 
 const Profile = ({user}) => {
   const {loading, error,message} = useSelector(state=> state.profile)
 
  const dispatch = useDispatch()
-    const removeFromPlaylistHandler =(id)=>{
-        console.log(id)
+    const removeFromPlaylistHandler = async(id)=>{
+        await dispatch(removeFromPlaylist(id))
+        await dispatch(loadUser())
     }
   const { isOpen, onClose, onOpen } = useDisclosure();
   const changeImageSubmitHandler = async (e, image) => {

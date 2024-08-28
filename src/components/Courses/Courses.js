@@ -6,13 +6,16 @@ Text,
   Input,
   Image,
 Heading,
-Stack
+Stack,
 } from '@chakra-ui/react';
 import '../Home/Home.css'
 import {Link} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 import { getAllCourses } from '../../Redux/actions/course';
 import {toast} from 'react-hot-toast'
+import { addToPlaylist } from '../../Redux/actions/course';
+import { loadUser } from '../../Redux/actions/user';
+
 export const Course = ({  views,
   title,
   imageSrc,
@@ -25,7 +28,7 @@ export const Course = ({  views,
   return(
     <>
       <div className=' course items-start flex flex-col gap-1 mt-5'>
-<Image src={"https://lovo.ai/_next/image?url=%2Fimage%2Fai-art-generator%2Fcarousel-gallery-image-6.jpg&w=384&q=75"} boxSize="40"  objectFit={'contain'} />
+<Image src={imageSrc} boxSize="40"  objectFit={'contain'} />
 <Heading
         textAlign={['center', 'left']}
         maxW="200px"
@@ -62,10 +65,10 @@ export const Course = ({  views,
       />
        <Stack direction={['column', 'row']} alignItems="center">
         <Link to={`/course/${id}`}>
-          <Button colorScheme={'yellow'}>Watch Now</Button>
+          <Button colorScheme={'yellow'} isLoading={loading} >Watch Now</Button>
         </Link>
         <Button
-          // isLoading={loading}
+          isLoading={loading}
           variant={'ghost'}
           colorScheme={'yellow'}
           onClick={() => addToPlaylistHandler(id)}
@@ -81,9 +84,7 @@ const Courses = () => {
 
 
 
-  const addToPlaylistHandler = (id)=>{
-    console.log(id)
-  }
+
   const categories = [
     'Web development',
     'Artificial Intellegence',
@@ -96,14 +97,22 @@ const Courses = () => {
   const [category, setCategory] = useState()
 
   const dispatch = useDispatch()
-  const {laoding,courses,error} = useSelector(state=>state.courses)
+  const {laoding,courses,error,message} = useSelector(state=>state.courses)
   useEffect(()=>{
     dispatch(getAllCourses(category,keyword))
     if(error){
       toast.error(error)
       dispatch({type:"clearError"})
     }
-  },[category,keyword,dispatch])
+    if(message){
+      toast.success(message)
+      dispatch({type:"clearMessage"})
+    }
+  },[category,keyword,dispatch,message,error])
+  const addToPlaylistHandler = async (id)=>{
+  await  dispatch(addToPlaylist(id))
+  await dispatch(loadUser())
+  }
   return (
     <div>
       <div  className=' max-w-xl py-8 m-auto items-start p-5 sm:p-0'>
@@ -143,7 +152,7 @@ const Courses = () => {
   description = {item.description}
 
   lectureCount = {item.numOfVideos}
-  loading = "Sample"
+  laoding
           />
         ))):( <Heading children="Course Not Found"/>)
       }
