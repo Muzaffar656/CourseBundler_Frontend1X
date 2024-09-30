@@ -5,13 +5,12 @@ import { RiDeleteBin7Fill } from 'react-icons/ri';
 import { fileUploadCss } from '../Auth/Register';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateProfilePicture } from '../../Redux/actions/profile';
-import { loadUser } from '../../Redux/actions/user';
+import { CancelSubscription, loadUser } from '../../Redux/actions/user';
 import toast from 'react-hot-toast';
 import { removeFromPlaylist } from '../../Redux/actions/course';
 
 const Profile = ({user}) => {
   const {loading, error,message} = useSelector(state=> state.profile)
-
  const dispatch = useDispatch()
     const removeFromPlaylistHandler = async(id)=>{
         await dispatch(removeFromPlaylist(id))
@@ -36,6 +35,11 @@ const Profile = ({user}) => {
 
     }
   },[dispatch,error,message])
+  const handelCancelSubscription = ()=>{
+    dispatch(CancelSubscription())
+   dispatch(loadUser())
+
+  }
   return (
     <Container minH={'95vh'} maxW="container.lg" py="8">
     <Heading children="Profile" m="8" textTransform={'uppercase'} />
@@ -71,9 +75,9 @@ const Profile = ({user}) => {
             user.role !== "admin" && (
                 <HStack>
               <Text children="Subscription" fontWeight={'bold'} />
-              {user.subscription && user.subscription === "active" ? (
+              {user.subscription && user.subscription.status === "open" ? (
                 <Button
-               
+               onClick={handelCancelSubscription}
                   color={'yellow.500'}
                   variant="unstyled"
                 >

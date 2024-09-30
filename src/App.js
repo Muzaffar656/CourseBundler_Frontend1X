@@ -52,7 +52,6 @@ function App() {
   useEffect(()=>{
     dispatch(loadUser())
   },[dispatch])
-
   return       (
     <Router>
    {
@@ -62,7 +61,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Home/>}/>
         <Route path='/courses' element={<Courses/>}/>
-        <Route path='/course/:id' element={<CoursePage/>}/>
+        <Route path='/course/:id' element={ <CoursePage user={user}/>}/>
         <Route path='/contact' element={<Contact/>}/>
         <Route path='/request' element={<Request/>}/>
         
@@ -78,8 +77,8 @@ function App() {
         <Route path='/forgetpassword' element={!isAuthenticate ? <ForgetPassword/>: <Profile user={user} />}/>
         <Route path='/resetpassword/:token' element={<ResetPassword/>}/>
         <Route path='/about' element={<About/>}/>
-        <Route path='/subscribe' element={<Subscribe/>}/>
-        <Route path='/paymentsuccess' element={<PaymentSuccess/>}/>
+        <Route path='/subscribe' element={isAuthenticate ? <Subscribe/> : <Login/> }/>
+        <Route path='/paymentsuccess' element={isAuthenticate ?<PaymentSuccess/> : <Login/>}/>
         <Route path='/paymentfail' element={<PaymentFail/>}/>
         <Route path='*' element={<NotFound/>}/>
         {/* ADMIN ROUTES */}

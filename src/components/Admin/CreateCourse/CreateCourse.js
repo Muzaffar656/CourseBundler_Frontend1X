@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     Box,
     Container,
@@ -16,6 +16,10 @@ import {
   } from '@chakra-ui/react';
 import cursor from '../../../assets/images/cursor.png';
 import Sidebar from '../Sidebar'
+import {useDispatch,useSelector} from 'react-redux'
+import { createCourse } from '../../../Redux/actions/admin';
+import toast from 'react-hot-toast'
+import { Navigate } from 'react-router-dom';
 export const fileUploadCss = {
   cursor: 'pointer',
   marginLeft: '-5%',
@@ -25,7 +29,10 @@ export const fileUploadCss = {
   color: '#ECC94B',
   backgroundColor: 'white',
 };
+
 const CreateCourse = () => {
+  const dispatch = useDispatch()
+  const {message,error,loading} = useSelector(state=>state.admin)
   const [title,setTitle] = useState('')
   const [description,setDescription] = useState('')
   const [category,setCategory] = useState('')
@@ -55,6 +62,27 @@ const CreateCourse = () => {
 setImage(file)
     };
   };
+  const handelSubmit = e=>{
+    e.preventDefault()
+    const myform = new FormData()
+    myform.append('title',title)
+    myform.append('description',description)
+    myform.append('category',category)
+    myform.append('createdBy',createdBy)
+    myform.append('file',image)
+    dispatch(createCourse(myform))
+return <Navigate to={'/admin/courses'}/>
+  }
+  useEffect(()=>{
+    if(message){
+      toast.success(message)
+      dispatch({type:"clearMessage"})
+    }
+    if(error){
+      toast.error(error)
+      dispatch({type:"clearError"})
+    }
+  },[dispatch,message,error,loading])
   return (
     <Grid
       css={{
@@ -64,7 +92,7 @@ setImage(file)
       templateColumns={['1fr', '5fr 1fr']}
     >
     <Container py={'10'}> 
-    <form>
+    <form onSubmit={handelSubmit}>
 
       <Heading   textTransform={'uppercase'}
             children="Create Course"
@@ -123,7 +151,7 @@ setImage(file)
               <Image src={imagePrev} boxSize="64" objectFit={'contain'} />
             )}
             <Button
-             
+             isLoading={loading}
               w="full"
               colorScheme={'purple'}
               type="submit"

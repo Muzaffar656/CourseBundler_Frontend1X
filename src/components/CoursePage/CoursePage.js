@@ -1,9 +1,14 @@
 import React,{useState} from 'react'
 import {Grid,Box,Heading, VStack,Button,Text} from '@chakra-ui/react'
 import introVideo from '../../assets/videos/intro.mp4';
+import { Navigate } from 'react-router-dom';
 
-const CoursePage = () => {
+const CoursePage = ({user}) => {
     const [lectureNumber, setLectureNumber] = useState(0);
+console.log(user)
+   if(user.role !=="admin" &&( user.subscription == undefined || user.subscription.status !== 'open')){
+   return <Navigate to={'/subscribe'}/>
+   } 
 
     const lectures = [
         {

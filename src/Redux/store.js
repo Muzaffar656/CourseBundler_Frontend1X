@@ -1,13 +1,21 @@
 import {configureStore} from '@reduxjs/toolkit'
-import { updateProfileReducer, userReducer } from './reducers/userReducer'
+import { subscriptionReducer, updateProfileReducer, userReducer } from './reducers/userReducer'
 import { courseReducer } from './reducers/courseReducer'
+import {otherReducer} from './reducers/otherReducer'
+import { adminReducer } from './reducers/adminReducer'
 const store = configureStore({
     reducer:{
         user : userReducer,
         profile : updateProfileReducer,
-        courses : courseReducer
-    }
-})
+        courses : courseReducer,
+        subscription:subscriptionReducer,
+        other:otherReducer,
+        admin:adminReducer
+        
+
+    },
+    
+}, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 
 export default store
 

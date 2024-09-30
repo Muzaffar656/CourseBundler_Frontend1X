@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import {
   Box,
   Button,
@@ -18,24 +18,29 @@ import { RiDeleteBin7Fill } from 'react-icons/ri';
 
 import cursor from '../../../assets/images/cursor.png';
 import Sidebar from '../Sidebar'
-const users = [
-  {
-    _id:"dfsdf",
-    name:"Muzaffar",
-    role:"admin",
-    subscription:[{
-      status:"active"
-    }],
-    email:"abc@gmail.com"
-  }
-]
-const updateHandler = (id)=>{
-  console.log(id)
-}
-const deleteButtonHandler = (id)=>{
-  console.log(id)
-}
+import {useSelector,useDispatch} from 'react-redux'
+import toast from 'react-hot-toast'
+import { changeRole, deleteUser, getAllUsers } from '../../../Redux/actions/admin';
 const User = () => {
+  const dispatch = useDispatch()
+  const updateHandler = (id)=>{
+    dispatch(changeRole(id))
+  }
+  const deleteButtonHandler = (id)=>{
+    dispatch(deleteUser(id))
+  }
+  const {users,message,error} = useSelector(state=>state.admin) 
+  useEffect(()=>{
+    if(message){
+      toast.success(message)
+      dispatch({type:'clearMessage'})
+    }
+    if(error){
+      toast.error(error)
+      dispatch({type:"clearError"})
+    }
+    dispatch(getAllUsers())
+  },[dispatch,message,error])
   return (
     <Grid
       css={{
@@ -90,7 +95,7 @@ const User = () => {
 
 export default User;
 
-function Row({ item,  }) {
+function Row({ item,updateHandler,deleteButtonHandler  }) {
   return (
     <Tr>
       <Td>#{item._id}</Td>
@@ -98,7 +103,7 @@ function Row({ item,  }) {
       <Td>{item.email}</Td>
       <Td>{item.role}</Td>
       <Td>
-        {item.subscription && item.subscription.status === 'active'
+        {item.subscription && item.subscription.status === 'open'
           ? 'Active'
           : 'Not Active'}
       </Td>

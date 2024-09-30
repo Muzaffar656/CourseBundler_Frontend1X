@@ -23,11 +23,11 @@ const Home = () => {
       <div className=' bg-black py-5 '>
         <h2 className=' text-center  font-bold text-lg text-yellow-300'>OUR BRANDS</h2>
         <div className='flex justify-evenly text-white text-2xl mt-3'>
-        <CgGoogle className='hover:text-yellow-300' />
-          <CgYoutube  className='hover:text-yellow-300'/>
-          <SiCoursera className='hover:text-yellow-300' />
-          <SiUdemy className='hover:text-yellow-300' />
-          <DiAws className='hover:text-yellow-300' />
+       <a href='https://www.google.com/' target='_blank'> <CgGoogle className='hover:text-yellow-300' /> </a>
+       <a href='https://www.youtube.com/' target='_blank'> <CgYoutube  className='hover:text-yellow-300'/></a>
+       <a href='https://www.coursera.org/' target='_blank'>  <SiCoursera className='hover:text-yellow-300' /></a>
+       <a href='https://www.udemy.com/' target='_blank'>   <SiUdemy className='hover:text-yellow-300' /></a>
+       <a href='https://aws.amazon.com/' target='_blank'>  <DiAws className='hover:text-yellow-300' /></a>
        
         </div>
       </div>

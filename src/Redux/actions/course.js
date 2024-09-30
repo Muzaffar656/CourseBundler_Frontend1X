@@ -12,7 +12,22 @@ export const getAllCourses = (category="",keyword="")=> async dispatch =>{
         dispatch({type:"allCoursesFail",payload:error.response.data.message})
     }
 }
-
+export const getCourseLectures = (id)=>async dispatch=>{
+    try {
+        dispatch({type:"getCourseLecturesRequest"})
+        const {data} = await axios.get(`${server}/course/${id}`,{
+            headers:{
+                'Content-Type':"application/json"
+            },
+            withCredentials:true
+        }) 
+        console.log(data)
+        dispatch({type:"getCourseLecturesSuccess",payload:data.lectures})
+    } catch (error) {
+        console.log(error)
+        dispatch({type:"getCourseLecturesFail",payload:error.response.data.message})
+    }
+}
 export const addToPlaylist = (id)=> async dispatch=>{
 
     try {

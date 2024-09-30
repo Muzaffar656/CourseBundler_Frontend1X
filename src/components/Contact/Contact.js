@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     Box,
     Button,
@@ -10,16 +10,37 @@ import {
     VStack,
   } from '@chakra-ui/react';
   import { Link } from 'react-router-dom';
+  import {useDispatch,useSelector} from 'react-redux'
+  import {contactUs} from '../../Redux/actions/other'
+  import toast from 'react-hot-toast'
 const Contact = () => {
+  const dispatch = useDispatch()
+  const {message:mess,error} = useSelector(state=>state.other)
+    const handelSubmit = e =>{
+      e.preventDefault()
+      dispatch(contactUs(name,email,message))
+      setEmail('')
+      setMessage("")
+      setName('')
+    }
+
     const [name,setName] = useState()
     const [email,setEmail] = useState()
     const [message,setMessage] = useState()
+    useEffect(()=>{
+      if(error){
+        toast.error(error)
+      }
+      if(mess){
+        toast.success(mess)
+      }
+    },[mess,error,dispatch])
   return (
     <Container h={'100vh'} mt={'0'}>
       <VStack h={'full'} justifyContent="center" >
         <Heading textTransform={'uppercase'} ml={['4','0']} children={'Contact Us'} />
 
-        <form  style={{ width: '100%' }}>
+        <form  style={{ width: '100%' }} onSubmit={handelSubmit}>
      
     <Box>
             <FormLabel htmlFor="name" children="Name" />

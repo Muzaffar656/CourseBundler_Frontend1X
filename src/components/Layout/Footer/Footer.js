@@ -26,13 +26,13 @@ const Footer = () => {
           color={'white'}
           fontSize="50"
         >
-          <a href="https://youtube.com/6packprogrammer" target={'blank'}>
+          <a href="https://youtube.com/@zafargaming0505" target={'blank'}>
             <TiSocialYoutubeCircular />
           </a>
-          <a href="https://instagram.com/meabhisingh" target={'blank'}>
+          <a href="https://instagram.com/muzaffar_hussain_00" target={'blank'}>
             <TiSocialInstagramCircular />
           </a>
-          <a href="https://github.com/meabhisingh" target={'blank'}>
+          <a href="https://github.com/Muzaffar656" target={'blank'}>
             <DiGithub />
           </a>
         </HStack>
