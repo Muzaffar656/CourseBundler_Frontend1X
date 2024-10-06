@@ -13,8 +13,10 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { courseRequest } from '../../Redux/actions/other';
 import toast from 'react-hot-toast';
+import Loader from '../Layout/Loader/Loader';
+
 const Request = () => {
-  const { message, error } = useSelector(state => state.other);
+  const { message, error,loading } = useSelector(state => state.other);
   const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [course, setCourse] = useState('');
@@ -34,10 +36,12 @@ const Request = () => {
     if (error) {
       toast.error(error);
     }
-  }, [message, error]);
+  }, [message, error,dispatch]);
   return (
     <Container h={'100vh'} mt={'0'}>
-      <VStack h={'full'} justifyContent="center">
+{
+  loading ? <Loader/> : (
+    <VStack h={'full'} justifyContent="center">
         <Heading
           textTransform={'uppercase'}
           ml={['4', '0']}
@@ -97,6 +101,8 @@ const Request = () => {
           </Box>
         </form>
       </VStack>
+  )
+}
     </Container>
   );
 };

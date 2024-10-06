@@ -11,7 +11,7 @@ import {
   ArcElement,
   Legend,
 } from 'chart.js';
-import { Line, Doughnut } from 'react-chartjs-2';
+import { Line, Doughnut, } from 'react-chartjs-2';
 ChartJS.register(
     CategoryScale,
   LinearScale,
@@ -22,7 +22,7 @@ ChartJS.register(
   ArcElement,
   Legend,
 )
-export const LineChart = () => {
+export const LineChart = ({views=[]}) => {
     const labels = getLastYearMonth()
     const options = {
         responsive: true,
@@ -41,7 +41,7 @@ export const LineChart = () => {
         datasets:[
             {
                 label:"Views",
-                data:[1,2,3,4,5],
+                data:views,
                 borderColor: 'rgba(107,70,193,0.5)',
                 backgroundColor: '#6b46c1',
             }
@@ -84,13 +84,18 @@ function getLastYearMonth(){
         'November',
         'December',
     ]
+    
     const currentMonth = new Date().getMonth()
+  
+
     const remain = 11 - currentMonth
     for (let i = currentMonth; i < months.length; i--) {
+  
         const element = months[i];
         labels.unshift(element)
         if(i === 0) break
     }
+    console.log(labels)
 for (let i = 11; i > remain; i--) {
     if (i === currentMonth) break;
     const element = months[i];

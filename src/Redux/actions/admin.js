@@ -6,7 +6,6 @@ export const getAdminStats = ()=>async dispatch =>{
     try {
         dispatch({type:"getAdminStatsRequest"})
         const {data} = await axios.get(`${server}/admin/stats`,{withCredentials:true})
-        console.log(data)
         dispatch({type:"getAdminStatsSuccess",payload:data})
 
     } catch (error) {

@@ -6,7 +6,7 @@ import { Navigate } from 'react-router-dom';
 const CoursePage = ({user}) => {
     const [lectureNumber, setLectureNumber] = useState(0);
 console.log(user)
-   if(user.role !=="admin" &&( user.subscription == undefined || user.subscription.status !== 'open')){
+   if(user.role !=="admin" &&( user.subscription === undefined || user.subscription.status !== 'open')){
    return <Navigate to={'/subscribe'}/>
    } 
 

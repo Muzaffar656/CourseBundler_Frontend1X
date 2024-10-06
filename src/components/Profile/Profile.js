@@ -14,7 +14,7 @@ const Profile = ({user}) => {
  const dispatch = useDispatch()
     const removeFromPlaylistHandler = async(id)=>{
         await dispatch(removeFromPlaylist(id))
-        await dispatch(loadUser())
+         dispatch(loadUser())
     }
   const { isOpen, onClose, onOpen } = useDisclosure();
   const changeImageSubmitHandler = async (e, image) => {
@@ -30,13 +30,14 @@ const Profile = ({user}) => {
       dispatch({type:"clearError"})
     }
     if(message){
+      console.log(message)
       toast.success(message)
       dispatch({type:"clearMessage"})
 
     }
   },[dispatch,error,message])
-  const handelCancelSubscription = ()=>{
-    dispatch(CancelSubscription())
+  const handelCancelSubscription = async()=>{
+  await  dispatch(CancelSubscription())
    dispatch(loadUser())
 
   }

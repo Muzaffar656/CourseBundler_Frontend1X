@@ -102,22 +102,22 @@ const Dashboard = () => {
             justifyContent={'space-evenly'}
           >
             <DataBox
-              title={'Views'}
               qty={viewCount}
               profit={viewProfit}
               qtypercentage={viewPercentage}
+              title={'Views'}
             />
             <DataBox
-              qty={'40'}
-              profit={false}
+              qty={subscriptionCount}
+              profit={subscriptionProfit}
+              qtypercentage={subscriptionCount}
               title={'Subscription'}
-              qtypercentage={'10'}
             />
             <DataBox
-              qty={'23'}
-              profit={true}
+              qty={userCount}
+              profit={userProfit}
+              qtypercentage={userPercentage}
               title={'Users'}
-              qtypercentage={'60'}
             />
           </Stack>
           <Box
@@ -135,7 +135,7 @@ const Dashboard = () => {
               ml={['0', '16']}
             />
 
-            <LineChart />
+            <LineChart views={stats.map((item)=>item.views)}/>
           </Box>
 
           <Grid templateColumns={['1fr', '2fr 1fr']}>
@@ -148,9 +148,9 @@ const Dashboard = () => {
                 ml={['0', '16']}
               />
               <Box>
-                <Bar profit={true} title={'Views'} value={70} />
-                <Bar profit={true} title={'Users'} value={70} />
-                <Bar profit={true} title={'Subscription'} value={20} />
+                <Bar profit={viewProfit} title={'Views'} value={viewCount} />
+                <Bar profit={userProfit} title={'Users'} value={userCount} />
+                <Bar profit={subscriptionProfit} title={'Subscription'} value={subscriptionCount} />
               </Box>
             </Box>
             <Box p={['0', '16']} boxSizing="border-box" py="4">

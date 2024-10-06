@@ -61,7 +61,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Home/>}/>
         <Route path='/courses' element={<Courses/>}/>
-        <Route path='/course/:id' element={ <CoursePage user={user}/>}/>
+        <Route path='/course/:id' element={  <CoursePage user={user}/>}/>
         <Route path='/contact' element={<Contact/>}/>
         <Route path='/request' element={<Request/>}/>
         

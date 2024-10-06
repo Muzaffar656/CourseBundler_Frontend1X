@@ -60,6 +60,7 @@ export const  removeFromPlaylist =  (id) => async dispatch =>{
             withCredentials:true
         }
         const {data} = await axios.delete(`${server}/removefromplaylist?id=${id}`,config)
+        console.log(data.message)
         dispatch({type:"removeFromPlaylistSuccess",payload:data.message})
     } catch (error) {
         dispatch({

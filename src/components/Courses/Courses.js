@@ -67,7 +67,7 @@ export const Course = ({
         />
         <Stack direction={['column', 'row']} alignItems="center">
           <Link to={`/course/${id}`}>
-            <Button colorScheme={'yellow'} isLoading={loading}>
+            <Button colorScheme={'yellow'} >
               Watch Now
             </Button>
           </Link>
@@ -97,7 +97,7 @@ const Courses = () => {
   const [category, setCategory] = useState();
 
   const dispatch = useDispatch();
-  const { laoding, courses, error, message } = useSelector(
+  const { loading, courses, error, message } = useSelector(
     state => state.courses
   );
   useEffect(() => {
@@ -110,10 +110,10 @@ const Courses = () => {
       toast.success(message);
       dispatch({ type: 'clearMessage' });
     }
-  }, [category, keyword, dispatch, message, error, courses]);
+  }, [category, keyword, dispatch, message, error]);
   const addToPlaylistHandler = async id => {
     await dispatch(addToPlaylist(id));
-    await dispatch(loadUser());
+     dispatch(loadUser());
   };
   return (
     <div>
@@ -151,7 +151,7 @@ const Courses = () => {
                 creator={item.createdBy}
                 description={item.description}
                 lectureCount={item.numOfVideos}
-                laoding
+                loading={loading}
               />
             ))
           ) : (
